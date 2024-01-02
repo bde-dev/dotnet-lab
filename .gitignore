@@ -1,0 +1,9 @@
+#Directories
+.vs/
+bin/
+bin-int/
+obj/
+publish/
+
+#Files
+*.user
