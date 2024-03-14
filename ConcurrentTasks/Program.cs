@@ -4,9 +4,63 @@ class Program
 {
     static async Task Main(string[] args)
     {
-        await RunParallelTasks();
+        //await RunParallelTasks();
 
+        var lTopLevelTasks = new List<Task<bool>>();
+
+        lTopLevelTasks.Add(TopLevelTask("1"));
+        //lTopLevelTasks.Add(TopLevelTask("2"));
+
+        await Task.WhenAll(lTopLevelTasks);
+        
         Console.ReadLine();
+    }
+
+    static async Task<bool> TopLevelTask(string topIndex)
+    {
+        Console.WriteLine($"{topIndex}: Top Level Task Started");
+
+        var src = new CancellationTokenSource();
+        var token = src.Token;
+        
+        var lMidLevelTasks = new List<Task<bool>>();
+        
+        lMidLevelTasks.Add(MidLevelTask(topIndex, "1", src, token));
+        lMidLevelTasks.Add(MidLevelTask(topIndex, "2", src, token));
+
+        await Task.WhenAll(lMidLevelTasks);
+        
+        Console.WriteLine($"{topIndex}: Top Level Task Finished");
+
+        return true;
+    }
+
+    static async Task<bool> MidLevelTask(string topIndex, string middleIndex, CancellationTokenSource src, CancellationToken token)
+    {
+        bool flag = false;
+        
+        try
+        {
+            Console.WriteLine($"{topIndex} | {middleIndex}: Mid Level Task Started");
+
+            Random r = new Random();
+
+            await Task.Delay(r.Next(1000, 5000), token);
+
+            if (r.Next(1,1) == 1)
+            {
+                flag = true;
+                src.Cancel();
+            }
+
+            Console.WriteLine($"{topIndex} | {middleIndex}: Mid Level Task Finished");
+            return flag;
+        }
+        catch (OperationCanceledException lException)
+        {
+            Console.WriteLine($"{topIndex} | {middleIndex}: Task cancelled");
+            return flag;
+        }
     }
 
     static async Task RunParallelTasks()
