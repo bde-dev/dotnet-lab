@@ -1,6 +1,4 @@
-﻿using FactoryPattern.samples;
-
-namespace FactoryPattern.Factories;
+﻿namespace FactoryPattern.Factories;
 
 public static class AbstractFactoryExtension
 {

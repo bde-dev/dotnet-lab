@@ -1,0 +1,4 @@
+CREATE PROCEDURE IF NOT EXISTS spUser_Delete(IN p_Id INT)
+BEGIN
+    DELETE FROM users WHERE Id = p_Id;
+END;

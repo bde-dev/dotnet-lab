@@ -24,13 +24,12 @@ public static class Api
         }
     }
 
-    private static async Task<IResult> GetUser(int pID, IUserData pData)
+    private static async Task<IResult> GetUser(int id, IUserData pData)
     {
         try
         {
-            var results = await pData.GetUser(pID);
-            if (results == null) return Results.NotFound();
-            return Results.Ok(results);
+            var results = await pData.GetUser(id);
+            return results == null ? Results.NotFound() : Results.Ok(results);
         }
         catch (Exception ex)
         {

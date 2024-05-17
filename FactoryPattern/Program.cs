@@ -1,7 +1,4 @@
 using FactoryPattern.Data;
-using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Web;
-
 using FactoryPattern.samples;
 using FactoryPattern.Factories;
 

@@ -1,21 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using RazorTest.Data;
 using RazorTest.Model;
 
 namespace RazorTest.Pages.Movies
 {
     public class EditModel : PageModel
     {
-        private readonly RazorTest.Data.RazorTestContext _context;
+        private readonly Data.RazorTestContext _context;
 
-        public EditModel(RazorTest.Data.RazorTestContext context)
+        public EditModel(Data.RazorTestContext context)
         {
             _context = context;
         }

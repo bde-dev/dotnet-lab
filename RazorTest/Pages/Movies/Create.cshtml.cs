@@ -1,20 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using RazorTest.Data;
 using RazorTest.Model;
 
 namespace RazorTest.Pages.Movies
 {
     public class CreateModel : PageModel
     {
-        private readonly RazorTest.Data.RazorTestContext _context;
+        private readonly Data.RazorTestContext _context;
 
-        public CreateModel(RazorTest.Data.RazorTestContext context)
+        public CreateModel(Data.RazorTestContext context)
         {
             _context = context;
         }

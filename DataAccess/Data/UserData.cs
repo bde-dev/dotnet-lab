@@ -1,10 +1,5 @@
 ﻿using DataAccess.DbAccess;
 using DataAccess.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DataAccess.Data;
 public class UserData : IUserData
@@ -17,23 +12,23 @@ public class UserData : IUserData
     }
 
     public Task<IEnumerable<UserModel>> GetUsers() =>
-        _db.LoadDataAsync<UserModel, dynamic>("dbo.spUser_GetAll", new { });
+        _db.LoadDataAsync<UserModel, dynamic>("spUser_GetAll", new { });
 
     public async Task<UserModel?> GetUser(int id)
     {
         var results = await _db.LoadDataAsync<UserModel, dynamic>(
-            "dbo.spUser_Get",
-            new { Id = id });
+            "spUser_Get",
+            new { p_Id = id });
 
         return results.FirstOrDefault();
     }
 
     public Task InsertUser(UserModel user) =>
-        _db.SaveData("dbo.spUser_Insert", new { user.FirstName, user.LastName });
+        _db.SaveData("spUser_Insert", new { p_FirstName = user.FirstName, p_LastName = user.LastName });
 
     public Task UpdateUser(UserModel user) =>
-        _db.SaveData("dbo.spUser_Update", user);
+        _db.SaveData("spUser_Update", new { p_Id = user.Id, p_FirstName = user.FirstName, p_LastName = user.LastName });
 
     public Task DeleteUser(int id) =>
-        _db.SaveData("dbo.spUser_Delete", new { Id = id });
+        _db.SaveData("spUser_Delete", new { p_Id = id });
 }

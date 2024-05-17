@@ -1,20 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
-using RazorTest.Data;
 using RazorTest.Model;
 
 namespace RazorTest.Pages.Movies
 {
     public class DeleteModel : PageModel
     {
-        private readonly RazorTest.Data.RazorTestContext _context;
+        private readonly Data.RazorTestContext _context;
 
-        public DeleteModel(RazorTest.Data.RazorTestContext context)
+        public DeleteModel(Data.RazorTestContext context)
         {
             _context = context;
         }

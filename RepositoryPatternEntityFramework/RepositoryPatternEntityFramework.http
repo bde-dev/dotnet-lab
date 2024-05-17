@@ -1,0 +1,6 @@
+@RepositoryPatternEntityFramework_HostAddress = http://localhost:5206
+
+GET {{RepositoryPatternEntityFramework_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
