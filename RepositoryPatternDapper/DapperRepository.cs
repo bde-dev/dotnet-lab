@@ -21,7 +21,7 @@ public class DapperRepository<T> : IRepository<T> where T : class
         return await _dbConnection.QueryAsync<T>(pStoredProcedure, commandType: CommandType.StoredProcedure);
     }
 
-    public async Task<IEnumerable<T>> GetById(string pStoredProcedure, object id)
+    public async Task<IEnumerable<T?>> GetById(string pStoredProcedure, object id)
     {
         _logger.LogInformation("Database Connection details: {0}", _dbConnection.ConnectionString);
 
