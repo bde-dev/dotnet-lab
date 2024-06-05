@@ -2,7 +2,7 @@
 using Serilog;
 using Wolverine;
 
-namespace WolverineDemo.Publishers;
+namespace WolverineMqttDemo.Publishers;
 
 public class BackgroundPublisher : BackgroundService
 {

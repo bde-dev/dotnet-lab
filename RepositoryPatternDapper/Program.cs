@@ -1,5 +1,7 @@
 using System.Data;
 using MySql.Data.MySqlClient;
+using Polly;
+using Polly.Retry;
 using RepositoryPatternDapper;
 using RepositoryPatternDapper.Extensions;
 
@@ -12,6 +14,8 @@ builder.Services.AddSwaggerGen();
 
 var dbConnection = new MySqlConnection(builder.Configuration.GetConnectionString("MariaDB"));
 
+Console.WriteLine("Got Connection String: " + dbConnection.ConnectionString);
+
 builder.Services.AddScoped<IDbConnection>(_ => dbConnection);
 
 builder.Services.AddScoped(typeof(IRepository<>), typeof(DapperRepository<>));
@@ -19,10 +23,10 @@ builder.Services.AddScoped(typeof(IRepository<>), typeof(DapperRepository<>));
 builder.Services.AddScoped<IUserService, UserService>();
 
 builder.AddMigrations(dbConnection);
-        
+
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+//Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -32,6 +36,8 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.MapEndpoints();
+
+await app.WaitForDb();
 
 app.ApplyMigrations();
 

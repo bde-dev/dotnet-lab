@@ -1,6 +1,6 @@
 ﻿using Serilog;
 
-namespace WolverineDemo.Handlers;
+namespace WolverineMqttDemo.Handlers;
 
 public class CreateCustomerHandler
 {
