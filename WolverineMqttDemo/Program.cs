@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using MQTTnet.Formatter;
 using Serilog;
 using Wolverine;
 using Wolverine.MQTT;
@@ -16,19 +17,19 @@ internal static class Program
         var lBuilder = Host.CreateDefaultBuilder();
         
 
-        lBuilder.UseWolverine(x =>
+        lBuilder.UseWolverine(opts =>
         {
-            x.UseMqtt(c =>
+            opts.UseMqtt(mqtt =>
             {
-                c.WithClientOptions(c =>
+                mqtt.WithClientOptions(client =>
                 {
-                    c.WithTcpServer("localhost");
-                    c.WithClientId("dotnet-app");
-                    c.WithCredentials("admin", "admin");
+                    client.WithTcpServer("localhost");
+                    client.WithClientId("dotnet-app");
+                    client.WithCredentials("artemis", "artemis");
                 });
             });
 
-            x.PublishAllMessages().ToTopic("testtopic");
+            opts.ListenToMqttTopic("testtopic");
         });
 
         lBuilder.ConfigureServices(s =>

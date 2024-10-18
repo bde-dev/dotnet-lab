@@ -11,8 +11,8 @@ public class CreateCustomerHandler
         _logger = logger;
     }
 
-    public void Handle(CreateCustomerMessage pCreateCustomerMessage)
+    public void Handle(List<CreateCustomerMessage> message)
     {
-        _logger.Information(pCreateCustomerMessage.ToString());
+        _logger.Information("Handling create customer message: {0}", message.ToString());
     }
 }

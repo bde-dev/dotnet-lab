@@ -1,0 +1,6 @@
+@Loki_HostAddress = http://localhost:5047
+
+GET {{Loki_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

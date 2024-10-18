@@ -21,4 +21,8 @@
       </Content>
     </ItemGroup>
 
+    <ItemGroup>
+      <Compile Remove="CreateCustomerHandler.cs" />
+    </ItemGroup>
+
 </Project>

@@ -19,7 +19,13 @@ public class BackgroundPublisher : BackgroundService
     {
         while (!stoppingToken.IsCancellationRequested)
         {
-            await _messageBus.SendAsync(new CreateCustomerMessage(new Guid(), "Brad Evans"));
+            var lList = new List<CreateCustomerMessage>
+            {
+                new (Guid.NewGuid(), "Brad Evans")
+            };
+            
+            await _messageBus.BroadcastToTopicAsync("testtopic", lList);
+            _logger.Information("Published create customer message");
             await Task.Delay(2000, stoppingToken);
         }
     }

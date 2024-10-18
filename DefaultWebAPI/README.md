@@ -1,0 +1,1 @@
+﻿This project merely exists as a way to quickly grab the weather API stock code.
