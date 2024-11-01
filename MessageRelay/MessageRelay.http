@@ -1,0 +1,6 @@
+@MessageRelay_HostAddress = http://localhost:5103
+
+GET {{MessageRelay_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

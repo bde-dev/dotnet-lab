@@ -1,4 +1,4 @@
-﻿namespace WeatherApp;
+﻿namespace OpenTelemetryCommon;
 
 public class WeatherForecast
 {

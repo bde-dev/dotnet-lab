@@ -102,7 +102,9 @@ builder.Services.AddOpenTelemetry()
     {
         tracing
             .AddAspNetCoreInstrumentation()
-            .AddHttpClientInstrumentation();
+            .AddHttpClientInstrumentation()
+            
+            .AddSource("MassTransit");
     
         tracing.AddOtlpExporter(options =>
         {

@@ -4,19 +4,16 @@ using OpenTelemetry.Exporter;
 using OpenTelemetry.Metrics;
 using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
+using OpenTelemetryCommon;
 using Serilog;
 using Serilog.Sinks.OpenTelemetry;
-using WeatherApp;
-using WeatherApp.Components;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddRazorComponents()
-    .AddInteractiveServerComponents();
-
-builder.Services.AddHttpClient<WeatherService>();
-builder.Services.AddTransient<WeatherPublisher>();
+// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
 
 builder.Services.AddMetrics();
 
@@ -26,7 +23,7 @@ builder.Services.AddMassTransit(mt =>
     mt.AddConsumers(typeof(Program).Assembly);
     mt.UsingRabbitMq((context, config) =>
     {
-        config.Host("rabbitmq", host =>
+        config.Host("localhost", host =>
         {
             host.Username("guest");
             host.Password("guest");
@@ -41,7 +38,7 @@ builder.Services.AddMassTransit(mt =>
 builder.Host.UseSerilog((context, logging) =>
 {
     logging
-        .MinimumLevel.Information()
+        .MinimumLevel.Verbose()
         .Enrich.FromLogContext()
         .Enrich.WithProperty("Application", context.HostingEnvironment.ApplicationName)
         .Enrich.WithProperty("Environment", context.HostingEnvironment.EnvironmentName)
@@ -50,14 +47,12 @@ builder.Host.UseSerilog((context, logging) =>
         .WriteTo.Console()
         .WriteTo.OpenTelemetry(options =>
         {
-            options.Endpoint = "http://otel-collector:4318";
+            options.Endpoint = "http://192.168.252.66:4318";
             options.Protocol = OtlpProtocol.HttpProtobuf;
             options.ResourceAttributes = new Dictionary<string, object>
             {
-                { "system.vendor", "tcsjohnhuxley" },
-                {"system.name", "weather_system"},
-                { "service.name", "WeatherApp" },
-                { "node.type", "table" }
+                { "service.name", "WeatherAlerts" },
+                { "node.type", "table" },
             };
         })
         ;
@@ -66,14 +61,7 @@ builder.Host.UseSerilog((context, logging) =>
 builder.Services.AddOpenTelemetry()
     .ConfigureResource(resource =>
     {
-        resource.AddAttributes(new Dictionary<string, object>
-        {
-            { "system.vendor", "tcsjohnhuxley" },
-            { "system.name", "weather_system" },
-            { "service.name", "WeatherApp" },
-            { "node.type", "table" }
-        });
-        resource.AddService("WeatherApp");
+        resource.AddService("WeatherAlerts");
         resource.AddTelemetrySdk();
     })
     
@@ -87,7 +75,7 @@ builder.Services.AddOpenTelemetry()
 
         tracing.AddOtlpExporter(options =>
         {
-            options.Endpoint = new Uri("http://otel-collector:4317");
+            options.Endpoint = new Uri("http://192.168.252.66:4317");
             options.Protocol = OtlpExportProtocol.Grpc;
         });
     })
@@ -99,11 +87,11 @@ builder.Services.AddOpenTelemetry()
             .AddHttpClientInstrumentation()
             .AddRuntimeInstrumentation()
 
-            .AddMeter("Microsoft.AspNetCore.Hosting", "Microsoft.AspNet.Server.Kestrel", "WeatherApp")
+            .AddMeter("Microsoft.AspNetCore.Hosting", "Microsoft.AspNet.Server.Kestrel")
 
             .AddOtlpExporter(opts =>
             {
-                opts.Endpoint = new Uri("http://otel-collector:4317");
+                opts.Endpoint = new Uri("http://192.168.252.66:4317");
                 opts.Protocol = OtlpExportProtocol.Grpc;
             });
     })
@@ -112,21 +100,12 @@ builder.Services.AddOpenTelemetry()
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (!app.Environment.IsDevelopment())
+if (app.Environment.IsDevelopment())
 {
-    app.UseExceptionHandler("/Error", createScopeForErrors: true);
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-    app.UseHsts();
+    app.UseSwagger();
+    app.UseSwaggerUI();
 }
 
-app.UseSerilogRequestLogging();
-
 app.UseHttpsRedirection();
-
-app.UseStaticFiles();
-app.UseAntiforgery();
-
-app.MapRazorComponents<App>()
-    .AddInteractiveServerRenderMode();
 
 app.Run();
