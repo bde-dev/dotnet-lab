@@ -26,8 +26,8 @@ builder.Services.AddMetrics();
 // Common variable definitions \\
 //-----------------------------\\
 
-string otelCollectorHttpEndpoint = "http://192.168.252.66:4318";
-string otelCollectorGrpcEndpoint = "http://192.168.252.66:4317";
+string otelCollectorHttpEndpoint = "http://localhost:4318";
+string otelCollectorGrpcEndpoint = "http://localhost:4317";
 var otelCollectorHttpEndpointUri = new Uri(otelCollectorHttpEndpoint);
 var otelCollectorGrpcEndpointUri = new Uri(otelCollectorGrpcEndpoint);
 

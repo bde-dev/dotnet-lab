@@ -11,6 +11,17 @@ using WeatherApp.Components;
 
 var builder = WebApplication.CreateBuilder(args);
 
+var rabbitHostname = Environment.GetEnvironmentVariable("RABBITMQ_HOSTNAME") ?? "localhost";
+var otelCollectorHostname = Environment.GetEnvironmentVariable("OTEL_COLLECTOR_HOSTNAME") ?? "localhost";
+var otelGrpcEndpoint = "http://" + otelCollectorHostname + ":4317";
+var otelHttpEndpoint = "http://" + otelCollectorHostname + ":4318";
+
+Console.WriteLine("Got env variables: ");
+Console.WriteLine($"rabbitHostname: {rabbitHostname}");
+Console.WriteLine($"otelCollectorHostname: {otelCollectorHostname}");
+Console.WriteLine($"otelGrpcEndpoint: {otelGrpcEndpoint}");
+Console.WriteLine($"otelHttpEndpoint: {otelHttpEndpoint}");
+
 // Add services to the container.
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
@@ -26,7 +37,7 @@ builder.Services.AddMassTransit(mt =>
     mt.AddConsumers(typeof(Program).Assembly);
     mt.UsingRabbitMq((context, config) =>
     {
-        config.Host("rabbitmq", host =>
+        config.Host(rabbitHostname, host =>
         {
             host.Username("guest");
             host.Password("guest");
@@ -50,12 +61,12 @@ builder.Host.UseSerilog((context, logging) =>
         .WriteTo.Console()
         .WriteTo.OpenTelemetry(options =>
         {
-            options.Endpoint = "http://otel-collector:4318";
+            options.Endpoint = otelHttpEndpoint;
             options.Protocol = OtlpProtocol.HttpProtobuf;
             options.ResourceAttributes = new Dictionary<string, object>
             {
-                { "system.vendor", "tcsjohnhuxley" },
-                {"system.name", "weather_system"},
+                { "service.namespace", "weather" },
+                { "system.vendor", "TCSJohnHuxley" },
                 { "service.name", "WeatherApp" },
                 { "node.type", "table" }
             };
@@ -68,8 +79,8 @@ builder.Services.AddOpenTelemetry()
     {
         resource.AddAttributes(new Dictionary<string, object>
         {
-            { "system.vendor", "tcsjohnhuxley" },
-            { "system.name", "weather_system" },
+            { "service.namespace", "weather" },
+            { "system.vendor", "TCSJohnHuxley" },
             { "service.name", "WeatherApp" },
             { "node.type", "table" }
         });
@@ -81,13 +92,14 @@ builder.Services.AddOpenTelemetry()
     {
         tracing
             .AddSource("MassTransit")
+            .AddSource("Npgsql")
             
             .AddHttpClientInstrumentation()
             .AddAspNetCoreInstrumentation();
 
         tracing.AddOtlpExporter(options =>
         {
-            options.Endpoint = new Uri("http://otel-collector:4317");
+            options.Endpoint = new Uri(otelGrpcEndpoint);
             options.Protocol = OtlpExportProtocol.Grpc;
         });
     })
@@ -103,7 +115,7 @@ builder.Services.AddOpenTelemetry()
 
             .AddOtlpExporter(opts =>
             {
-                opts.Endpoint = new Uri("http://otel-collector:4317");
+                opts.Endpoint = new Uri(otelGrpcEndpoint);
                 opts.Protocol = OtlpExportProtocol.Grpc;
             });
     })

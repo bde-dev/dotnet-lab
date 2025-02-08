@@ -8,6 +8,7 @@ FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 COPY ["WeatherApp/WeatherApp.csproj", "WeatherApp/"]
+COPY ["OpenTelemetryCommon/OpenTelemetryCommon.csproj", "OpenTelemetryCommon/"]
 RUN dotnet restore "WeatherApp/WeatherApp.csproj"
 COPY . .
 WORKDIR "/src/WeatherApp"

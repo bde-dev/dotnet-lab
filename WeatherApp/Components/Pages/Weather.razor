@@ -48,6 +48,6 @@ else
         // Simulate asynchronous loading to demonstrate streaming rendering
         await Task.Delay(500);
         
-        var forecasts = await WeatherService.GetWeatherForecast();
+        forecasts = await WeatherService.GetWeatherForecast();
     }
 }
