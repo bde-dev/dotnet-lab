@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.8.34330.188
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConcurrentTasks", "ConcurrentTasks\ConcurrentTasks.csproj", "{6C4369B1-D1F9-4781-956D-DF57A07AF6AD}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HelloWorldLibrary", "HelloWorldLibrary\HelloWorldLibrary.csproj", "{D1DE47FE-08AA-42A5-810B-56227ABFEB2E}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HelloWorldTests", "HelloWorldTests\HelloWorldTests.csproj", "{99B14E60-47FB-4311-8520-66434E9741EB}"
@@ -30,8 +28,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RepositoryPatternEntityFramework", "RepositoryPatternEntityFramework\RepositoryPatternEntityFramework.csproj", "{595A58FE-D196-490D-A93F-5C23D124CDBC}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "dotnet", "dotnet", "{B6B514A5-E77E-4D18-8965-9B537853606A}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "csharp", "csharp", "{2B31C12E-D0B0-483D-AC00-934347942319}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UltimateHelloWord", "UltimateHelloWord", "{21591908-0641-4C82-BB76-733D6E59A686}"
 EndProject
@@ -85,10 +81,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{6C4369B1-D1F9-4781-956D-DF57A07AF6AD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6C4369B1-D1F9-4781-956D-DF57A07AF6AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6C4369B1-D1F9-4781-956D-DF57A07AF6AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6C4369B1-D1F9-4781-956D-DF57A07AF6AD}.Release|Any CPU.Build.0 = Release|Any CPU
 		{D1DE47FE-08AA-42A5-810B-56227ABFEB2E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{D1DE47FE-08AA-42A5-810B-56227ABFEB2E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D1DE47FE-08AA-42A5-810B-56227ABFEB2E}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -189,7 +181,6 @@ Global
 		SolutionGuid = {100646E2-D87C-4806-A716-1BE32765FD9C}
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{6C4369B1-D1F9-4781-956D-DF57A07AF6AD} = {2B31C12E-D0B0-483D-AC00-934347942319}
 		{339CEB81-9A25-4B60-BDAB-7B56B5675578} = {B6B514A5-E77E-4D18-8965-9B537853606A}
 		{04F825FA-7CD4-416D-8773-EFC3441B2880} = {B6B514A5-E77E-4D18-8965-9B537853606A}
 		{69354E95-455F-4156-B107-69A6A506550B} = {B6B514A5-E77E-4D18-8965-9B537853606A}
