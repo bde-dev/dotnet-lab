@@ -1,6 +1,5 @@
 ﻿using System.Net;
 using System.Net.Http.Json;
-using FluentAssertions;
 using RepositoryPatternDapper;
 using Xunit.Abstractions;
 
@@ -29,6 +28,6 @@ public class CreateUserTests : IClassFixture<UserApiFactory>
         //Asset
         var responseString = await response.Content.ReadAsStringAsync();
         _testOutputHelper.WriteLine(responseString);
-        response.StatusCode.Should().Be(HttpStatusCode.OK);
+        Assert.Equal(HttpStatusCode.OK, response.StatusCode);
     }
 }

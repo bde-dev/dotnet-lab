@@ -36,8 +36,7 @@ public class UserApiFactory : WebApplicationFactory<Program>, IAsyncLifetime
             services.RemoveAll(typeof(IMigrationRunner));
             
             //Add new test services using configurations from the created container.
-            services.AddSingleton<IDbConnection>(_ =>
-                new MySqlConnection(_dbContainer.GetConnectionString()));
+            services.AddSingleton<IDbConnection>(_ => new MySqlConnection(_dbContainer.GetConnectionString()));
             
             services.AddFluentMigratorCore()
                 .ConfigureRunner(rb =>

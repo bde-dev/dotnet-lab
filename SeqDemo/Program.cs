@@ -12,66 +12,9 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-// SERILOG NICK SEQ
-
-// Log.Logger = new LoggerConfiguration()
-//     .Enrich.FromLogContext()
-//     .WriteTo.Console()
-//     .WriteTo.OpenTelemetry(x =>
-//     {
-//         x.Endpoint = "http://localhost:5431/ingest/otlp/v1/logs";
-//         x.Protocol = OtlpProtocol.HttpProtobuf;
-//         x.ResourceAttributes = new Dictionary<string, object>()
-//         {
-//             ["Deployment.environment"] = builder.Environment.EnvironmentName,
-//             ["Deployment.application"] = builder.Environment.ApplicationName
-//         };
-//         x.Headers = new Dictionary<string, string>()
-//         {
-//             ["X-Seq-ApiKey"] = "Db1wxsyuizt195UdjxcP"
-//         };
-//     })
-//     .CreateLogger();
-//
-// builder.Services.AddSerilog();
-
-
-
-
-
-// MICROSOFT PROVIDER SEQ
-// builder.Logging.ClearProviders();
-// builder.Logging.AddOpenTelemetry(x =>
-// {
-//     x.AddConsoleExporter();
-//     x.SetResourceBuilder(ResourceBuilder.CreateEmpty()
-//         .AddService("loki-test")
-//         .AddTelemetrySdk()
-//         .AddAttributes(new Dictionary<string, object>()
-//         {
-//             ["Deployment.environment"] = builder.Environment.EnvironmentName,
-//             ["Deployment.application"] = builder.Environment.ApplicationName
-//         }));
-//
-//     x.IncludeScopes = true;
-//     x.IncludeFormattedMessage = true;
-//     
-//     x.AddOtlpExporter(a =>
-//     {
-//         a.Endpoint = new Uri("http://localhost:5341/ingest/otlp/v1/logs");
-//         a.Protocol = OtlpExportProtocol.HttpProtobuf;
-//         a.Headers = "X-Seq-ApiKey=Db1wxsyuizt195UdjxcP";
-//     });
-// });
-
-
-
-
-// SERILOG MILAN SEQ
-
 builder.Host.UseSerilog((context, logging) =>
 {
-    //logging.ReadFrom.Configuration(context.Configuration);
+    logging.ReadFrom.Configuration(context.Configuration);
     logging.WriteTo.OpenTelemetry(opts =>
     {
         opts.Endpoint = "http://localhost:5341/ingest/otlp/v1/logs";
@@ -90,16 +33,6 @@ builder.Services.AddOpenTelemetry()
         resource.AddService("seq-demo");
         resource.AddTelemetrySdk();
     })
-    // .WithLogging(logging =>
-    // {
-    //     logging.AddConsoleExporter();
-    //     logging.AddOtlpExporter(options =>
-    //     {
-    //         options.Endpoint = new Uri("http://localhost:5341/ingest/otlp/v1/logs");
-    //         options.Protocol = OtlpExportProtocol.HttpProtobuf;
-    //         options.Headers = "X-Seq-ApiKey=CfqxpB1rlI8CREwlUoNu";
-    //     });
-    // })
     .WithTracing(tracing =>
     {
         tracing.AddHttpClientInstrumentation()
@@ -112,9 +45,6 @@ builder.Services.AddOpenTelemetry()
             options.Headers = "X-Seq-ApiKey=CfqxpB1rlI8CREwlUoNu";
         });
     });
-
-
-
 
 var app = builder.Build();
 

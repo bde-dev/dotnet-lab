@@ -1,6 +1,5 @@
 ﻿using System.Net;
 using System.Net.Http.Json;
-using FluentAssertions;
 using RepositoryPatternDapper;
 using Xunit.Abstractions;
 
@@ -24,12 +23,12 @@ public class GetAllUsersTests : IClassFixture<UserApiFactory>
         var response = await _client.GetAsync("users");
         
         //Assert
-        response.StatusCode.Should().Be(HttpStatusCode.OK);
+        Assert.Equal(HttpStatusCode.OK, response.StatusCode);
         var users = await response.Content.ReadFromJsonAsync<List<User>>();
         foreach (var user in users)
         {
             _testOutputHelper.WriteLine(user.ToString());
         }
-        users.Count.Should().Be(0);
+        Assert.Empty(users);
     }
 }

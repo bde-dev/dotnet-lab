@@ -4,7 +4,6 @@ using OpenTelemetry.Exporter;
 using OpenTelemetry.Metrics;
 using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
-using OpenTelemetryCommon;
 using Serilog;
 using Serilog.Sinks.OpenTelemetry;
 
