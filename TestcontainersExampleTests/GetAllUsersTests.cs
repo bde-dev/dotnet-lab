@@ -3,7 +3,7 @@ using System.Net.Http.Json;
 using TestcontainersDemoSource;
 using Xunit.Abstractions;
 
-namespace TestacontainerExampleTests;
+namespace TestcontainersExampleTests;
 
 public class GetAllUsersTests : IClassFixture<UserApiFactory>
 {

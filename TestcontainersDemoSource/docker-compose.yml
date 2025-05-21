@@ -1,0 +1,15 @@
+services:
+  postgresql:
+    image: bitnami/postgresql:latest
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRESQL_USERNAME: root
+      POSTGRESQL_PASSWORD: admin
+      POSTGRESQL_DATABASE: userdb
+      
+  demo-source:
+    ports:
+      - 8080:8080
+    build:
+      context: .

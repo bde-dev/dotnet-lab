@@ -3,7 +3,7 @@ using System.Net.Http.Json;
 using TestcontainersDemoSource;
 using Xunit.Abstractions;
 
-namespace TestacontainerExampleTests;
+namespace TestcontainersExampleTests;
 
 public class CreateUserTests : IClassFixture<UserApiFactory>
 {
@@ -20,7 +20,7 @@ public class CreateUserTests : IClassFixture<UserApiFactory>
     public async Task CreateUser_ServerShouldReturn200_WhenUserIsCreated()
     {
         //Arrange
-        var user = new User { FirstName = "Nick", LastName = "Chapsas" };
+        var user = new User { Id = 0, FirstName = "Brad", LastName = "Evans" };
 
         //Act
         var response = await _client.PostAsJsonAsync("users", user);

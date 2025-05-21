@@ -17,7 +17,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WolverineMqttDemo", "Wolver
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RepositoryPatternDapper", "RepositoryPatternDapper\RepositoryPatternDapper.csproj", "{24E194EA-612D-43DC-8571-A03DB656B019}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestContainerExampleTests", "TestContainerExampleTests\TestContainerExampleTests.csproj", "{C825E967-6CF6-43AA-88DE-CA949ED59AF7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestcontainersExampleTests", "TestcontainersExampleTests\TestcontainersExampleTests.csproj", "{C825E967-6CF6-43AA-88DE-CA949ED59AF7}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RepositoryPatternEntityFramework", "RepositoryPatternEntityFramework\RepositoryPatternEntityFramework.csproj", "{595A58FE-D196-490D-A93F-5C23D124CDBC}"
 EndProject
@@ -36,6 +36,10 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Message Queues", "Message Queues", "{6205F68B-7C43-4250-956E-D8D7300965B6}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WolverineRabbitDemo", "WolverineRabbitDemo\WolverineRabbitDemo.csproj", "{5DCDAB93-8BDA-404E-82F9-1A0A355A6359}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "testcontainers", "testcontainers", "{9408BCF9-D5D5-4129-9A58-F7E9457E1A44}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestcontainersDemoSource", "TestcontainersDemoSource\TestcontainersDemoSource.csproj", "{6DBF2DE2-E197-40A6-A921-53A00DEA27A9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -91,6 +95,10 @@ Global
 		{5DCDAB93-8BDA-404E-82F9-1A0A355A6359}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5DCDAB93-8BDA-404E-82F9-1A0A355A6359}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5DCDAB93-8BDA-404E-82F9-1A0A355A6359}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6DBF2DE2-E197-40A6-A921-53A00DEA27A9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6DBF2DE2-E197-40A6-A921-53A00DEA27A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6DBF2DE2-E197-40A6-A921-53A00DEA27A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6DBF2DE2-E197-40A6-A921-53A00DEA27A9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -108,5 +116,7 @@ Global
 		{7E5E8630-9F8B-446E-A329-CF2E03A541E3} = {6205F68B-7C43-4250-956E-D8D7300965B6}
 		{5DCDAB93-8BDA-404E-82F9-1A0A355A6359} = {6205F68B-7C43-4250-956E-D8D7300965B6}
 		{115C3D76-E8AB-4B64-856E-1886CC984886} = {9E05F4E2-C414-4492-B556-EC4BA20D7040}
+		{C825E967-6CF6-43AA-88DE-CA949ED59AF7} = {9408BCF9-D5D5-4129-9A58-F7E9457E1A44}
+		{6DBF2DE2-E197-40A6-A921-53A00DEA27A9} = {9408BCF9-D5D5-4129-9A58-F7E9457E1A44}
 	EndGlobalSection
 EndGlobal
