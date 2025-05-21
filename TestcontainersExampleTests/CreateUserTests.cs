@@ -1,9 +1,9 @@
 ﻿using System.Net;
 using System.Net.Http.Json;
-using RepositoryPatternDapper;
+using TestcontainersDemoSource;
 using Xunit.Abstractions;
 
-namespace TestContainerExampleTests;
+namespace TestacontainerExampleTests;
 
 public class CreateUserTests : IClassFixture<UserApiFactory>
 {

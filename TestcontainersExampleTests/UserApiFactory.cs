@@ -6,13 +6,14 @@ using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
-using MySql.Data.MySqlClient;
-using RepositoryPatternDapper;
+using Npgsql;
 using Testcontainers.MariaDb;
+using Testcontainers.PostgreSql;
+using TestcontainersDemoSource;
 
-namespace TestContainerExampleTests;
+namespace TestacontainerExampleTests;
 
-//This class demonstrates using test containers to run unit tests for a web API against a MariaDB container.
+//This class demonstrates using test containers to run unit tests for a web API against a postgres container.
 //It leverages the WebApplicationFactory as a means to mock the Http client.
 //The generic type parameter "Program" tells the WAF what this class is based on.
 //IAsyncLifetime allows the class to implement asynchronous startup and clean up tasks.
@@ -21,6 +22,13 @@ public class UserApiFactory : WebApplicationFactory<Program>, IAsyncLifetime
     //Build a new MariaDB container with a specified config.
     private readonly MariaDbContainer _dbContainer = new MariaDbBuilder()
         .WithImage("mariadb:latest")
+        .WithDatabase("userdb")
+        .WithUsername("root")
+        .WithPassword("admin")
+        .Build();
+
+    private readonly PostgreSqlContainer _postgreSqlContainer = new PostgreSqlBuilder()
+        .WithImage("postgres:latest")
         .WithDatabase("userdb")
         .WithUsername("root")
         .WithPassword("admin")
@@ -36,27 +44,23 @@ public class UserApiFactory : WebApplicationFactory<Program>, IAsyncLifetime
             services.RemoveAll(typeof(IMigrationRunner));
             
             //Add new test services using configurations from the created container.
-            services.AddSingleton<IDbConnection>(_ => new MySqlConnection(_dbContainer.GetConnectionString()));
+            services.AddSingleton<IDbConnection>(_ => new NpgsqlConnection(_postgreSqlContainer.GetConnectionString()));
             
             services.AddFluentMigratorCore()
                 .ConfigureRunner(rb =>
-                    rb.AddMySql5()
-                        .WithGlobalConnectionString(_dbContainer.GetConnectionString())
-                        .ScanIn(typeof(DatabaseMigration).Assembly).For.Migrations())
-                .Configure<SelectingProcessorAccessorOptions>(opt =>
-                {
-                    opt.ProcessorId = "MySql5";
-                });
+                    rb.AddPostgres()
+                        .WithGlobalConnectionString(_postgreSqlContainer.GetConnectionString())
+                        .ScanIn(typeof(PostgresMigration).Assembly).For.Migrations());
         });
     }
 
     public async Task InitializeAsync()
     {
-        await _dbContainer.StartAsync();
+        await _postgreSqlContainer.StartAsync();
     }
 
     public new async Task DisposeAsync()
     {
-        await _dbContainer.StopAsync();
+        await _postgreSqlContainer.StopAsync();
     }
 }
